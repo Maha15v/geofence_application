@@ -95,7 +95,7 @@ class GeofenceServiceHandler {
     if (status == GeofenceStatus.ENTER) {
       print("Entered geofence: ${geofence.id}");
 
-      _recordEntryTime(geofence.latitude, geofence.longitude);
+    //  _recordEntryTime(geofence.latitude, geofence.longitude);
 
       List<String> enterMessages =
           prefs.getStringList('enterMessages_${geofence.id}') ??
@@ -104,7 +104,11 @@ class GeofenceServiceHandler {
           DateTime.now().millisecondsSinceEpoch.remainder(100000);
       for (String message in enterMessages) {
         print('Showing notification: $message');
-        await _showNotification('Entered Geofence', message, notificationId);
+        
+        String currentTime = DateTime.now().toString();
+        print("current time :$currentTime");
+        await _showNotification('Entered Geofence:', message + currentTime, notificationId,);
+        
         notificationId++;
         markReminderAsDone(message);
       }
